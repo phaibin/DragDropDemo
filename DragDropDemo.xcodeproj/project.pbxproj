@@ -13,6 +13,7 @@
 		35800F01144FBB52002B7342 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 35800EFF144FBB52002B7342 /* Credits.rtf */; };
 		35800F04144FBB52002B7342 /* DragDropDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35800F03144FBB52002B7342 /* DragDropDemoAppDelegate.m */; };
 		35800F07144FBB53002B7342 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35800F05144FBB53002B7342 /* MainMenu.xib */; };
+		35965B14144FC203008B8913 /* DragDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35965B13144FC203008B8913 /* DragDropImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		35800F02144FBB52002B7342 /* DragDropDemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragDropDemoAppDelegate.h; sourceTree = "<group>"; };
 		35800F03144FBB52002B7342 /* DragDropDemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragDropDemoAppDelegate.m; sourceTree = "<group>"; };
 		35800F06144FBB53002B7342 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		35965B12144FC203008B8913 /* DragDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragDropImageView.h; sourceTree = "<group>"; };
+		35965B13144FC203008B8913 /* DragDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragDropImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				35800F02144FBB52002B7342 /* DragDropDemoAppDelegate.h */,
 				35800F03144FBB52002B7342 /* DragDropDemoAppDelegate.m */,
 				35800F05144FBB53002B7342 /* MainMenu.xib */,
+				35965B12144FC203008B8913 /* DragDropImageView.h */,
+				35965B13144FC203008B8913 /* DragDropImageView.m */,
 				35800EF7144FBB52002B7342 /* Supporting Files */,
 			);
 			path = DragDropDemo;
@@ -164,6 +169,7 @@
 			files = (
 				35800EFD144FBB52002B7342 /* main.m in Sources */,
 				35800F04144FBB52002B7342 /* DragDropDemoAppDelegate.m in Sources */,
+				35965B14144FC203008B8913 /* DragDropImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +289,7 @@
 				35800F0C144FBB53002B7342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
