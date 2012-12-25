@@ -200,7 +200,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [dragImage setSize:[self bounds].size];//change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
-    [dragImage release];
 }
 
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
@@ -210,8 +209,18 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     
     representations = [[self image] representations];
     
-    bitmapData = [NSBitmapImageRep representationOfImageRepsInArray:representations 
-                                                          usingType:NSPNGFileType properties:nil];
+    if ([[[representations objectAtIndex:0] className] isEqualToString:@"NSBitmapImageRep"]) {
+        bitmapData = [NSBitmapImageRep representationOfImageRepsInArray:representations
+                                                              usingType:NSPNGFileType properties:nil];
+    } else {
+        NSLog(@"%@", [[[[self image] representations] objectAtIndex:0] className]);
+        
+        [[self image] lockFocus];
+        NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, [self image].size.width, self.image.size.height)];
+        [[self image] unlockFocus];
+        
+        bitmapData = [bitmapRep TIFFRepresentation];
+    }
     
     [bitmapData writeToFile:[[dropDestination path] stringByAppendingPathComponent:@"test.png"]  atomically:YES];
     return [NSArray arrayWithObjects:@"test.png", nil];
