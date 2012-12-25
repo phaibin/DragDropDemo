@@ -200,6 +200,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [dragImage setSize:[self bounds].size];//change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
+    [dragImage release];
 }
 
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
