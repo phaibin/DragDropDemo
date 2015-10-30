@@ -9,6 +9,7 @@
 
 #import "DragDropImageView.h"
 
+
 @implementation DragDropImageView
 
 @synthesize allowDrag;
@@ -147,7 +148,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         
             //if the drag comes from a file, set the window title to the filename
         fileURL=[NSURL URLFromPasteboard: [sender draggingPasteboard]];
-//        [[self window] setTitle: fileURL!=NULL ? [fileURL absoluteString] : @"(no name)"];
+        [[self window] setTitle: fileURL!=NULL ? [fileURL lastPathComponent] : @"(no name)"];
         if ([self.delegate respondsToSelector:@selector(dropComplete:)]) {
             [self.delegate dropComplete:[fileURL path]];
         }
@@ -191,13 +192,40 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 {
     //create a new image for our semi-transparent drag image
     NSImage* dragImage=[[NSImage alloc] initWithSize:[[self image] size]]; 
+
+    
     
     [dragImage lockFocus];//draw inside of our dragImage
     //draw our original image as 50% transparent
     [[self image] dissolveToPoint: NSZeroPoint fraction: .5];
     [dragImage unlockFocus];//finished drawing
     [dragImage setScalesWhenResized:NO];//we want the image to resize
-    [dragImage setSize:[self bounds].size];//change to the size we are displaying
+    // Old code that scales drag proxy to view size
+    // [dragImage setSize:[self bounds].size];//change to the size we are displaying
+
+    // Find size of scaled image inside the view
+    
+    NSSize scaledImageSize; // Size (width,height) of the scaled image in the view
+    float scale; // multiplier for the scaled image
+
+    float imageRatio = dragImage.size.width / dragImage.size.height;
+    
+    float viewRatio = [self bounds].size.width / [self bounds].size.height;
+    
+    if(imageRatio < viewRatio)
+    {
+        scale = [self bounds].size.height / dragImage.size.height;
+    }
+    else
+    {
+        scale = [self bounds].size.width / dragImage.size.width;
+    }
+    
+    
+    scaledImageSize.width = scale * dragImage.size.width;
+    scaledImageSize.height = scale * dragImage.size.height;
+    
+    [dragImage setSize:scaledImageSize];//change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
     [dragImage release];
