@@ -18,20 +18,34 @@
 
 NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
-- (id)initWithCoder:(NSCoder *)coder
+
+- (instancetype)initWithFrame:(NSRect)frame
 {
-    /*------------------------------------------------------
-        Init method called for Interface Builder objects
-    --------------------------------------------------------*/
-    self=[super initWithCoder:coder];
-    if ( self ) {
-            //register for all the image types we can display
-        [self registerForDraggedTypes:[NSImage imagePasteboardTypes]];
-        self.allowDrag = YES;
-        self.allowDrop = YES;
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        [self setup];
     }
     return self;
 }
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup
+{
+    [self registerForDraggedTypes:[NSImage imagePasteboardTypes]];
+    self.allowDrag = YES;
+    self.allowDrop = YES;
+}
+
+
 
 #pragma mark - Destination Operations
 
