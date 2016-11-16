@@ -18,9 +18,9 @@
     BOOL highlight;
 }
 
-@property BOOL allowDrag;
-@property BOOL allowDrop;
-@property (weak) IBOutlet id<DragDropImageViewDelegate> delegate;
+@property (assign) BOOL allowDrag;
+@property (assign) BOOL allowDrop;
+@property (assign) IBOutlet id<DragDropImageViewDelegate> delegate;
 @property (retain) NSString *path;
 
 - (id)initWithCoder:(NSCoder *)coder;
