@@ -247,7 +247,7 @@ static NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         bitmapData = [bitmapRep TIFFRepresentation];
     }
 
-    NSString *filename = [self.path lastPathComponent] ?: @"test.png";
+    NSString *filename = self.path.lastPathComponent ?: @"test.png";
     [bitmapData writeToFile:[[dropDestination path] stringByAppendingPathComponent:filename]  atomically:YES];
     return [NSArray arrayWithObjects:filename, nil];
 }
