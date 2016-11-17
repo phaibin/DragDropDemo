@@ -20,7 +20,8 @@
 
 @property (assign) BOOL allowDrag;
 @property (assign) BOOL allowDrop;
-@property (assign) id<DragDropImageViewDelegate> delegate;
+@property (assign) IBOutlet id<DragDropImageViewDelegate> delegate;
+@property (retain) NSString *path;
 
 - (id)initWithCoder:(NSCoder *)coder;
 

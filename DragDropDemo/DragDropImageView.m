@@ -26,7 +26,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     self=[super initWithCoder:coder];
     if ( self ) {
             //register for all the image types we can display
-        [self registerForDraggedTypes:[NSImage imagePasteboardTypes]];
+        [self registerForDraggedTypes:[NSImage imageTypes]];
         self.allowDrag = YES;
         self.allowDrop = YES;
     }
@@ -58,7 +58,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         [sender enumerateDraggingItemsWithOptions:NSDraggingItemEnumerationConcurrent 
             forView:self
             classes:[NSArray arrayWithObject:[NSPasteboardItem class]] 
-            searchOptions:nil 
+            searchOptions:@{}
             usingBlock:^(NSDraggingItem *draggingItem, NSInteger idx, BOOL *stop) {
                 
                     /* Only resize a fragging item if it originated from one of our windows.  To do this,
@@ -148,6 +148,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         
             //if the drag comes from a file, set the window title to the filename
         fileURL=[NSURL URLFromPasteboard: [sender draggingPasteboard]];
+        self.path = fileURL.path;
         [[self window] setTitle: fileURL!=NULL ? [fileURL lastPathComponent] : @"(no name)"];
         if ([self.delegate respondsToSelector:@selector(dropComplete:)]) {
             [self.delegate dropComplete:[fileURL path]];
@@ -228,7 +229,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [dragImage setSize:scaledImageSize];//change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
-    [dragImage release];
 }
 
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
@@ -240,7 +240,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     
     if ([[[representations objectAtIndex:0] className] isEqualToString:@"NSBitmapImageRep"]) {
         bitmapData = [NSBitmapImageRep representationOfImageRepsInArray:representations
-                                                              usingType:NSPNGFileType properties:nil];
+                                                              usingType:NSPNGFileType properties:@{}];
     } else {
         NSLog(@"%@", [[[[self image] representations] objectAtIndex:0] className]);
         
@@ -250,9 +250,10 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         
         bitmapData = [bitmapRep TIFFRepresentation];
     }
-    
-    [bitmapData writeToFile:[[dropDestination path] stringByAppendingPathComponent:@"test.png"]  atomically:YES];
-    return [NSArray arrayWithObjects:@"test.png", nil];
+
+    NSString *filename = self.path.lastPathComponent ?: @"test.png";
+    [bitmapData writeToFile:[[dropDestination path] stringByAppendingPathComponent:filename]  atomically:YES];
+    return [NSArray arrayWithObjects:filename, nil];
 }
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
