@@ -12,11 +12,11 @@
 
 @implementation DragDropImageView
 
-NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
-
 @synthesize allowDrag;
 @synthesize allowDrop;
 @synthesize delegate;
+
+NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (id)initWithCoder:(NSCoder *)coder
 {
